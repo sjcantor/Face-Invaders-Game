@@ -39,26 +39,38 @@ void Hitbox::updateHitbox(float botx, float boty, float topx, float topy){
 }
 
 void Hitbox::horizontalMovement(float speed, float end){
-  	float change;
   	while(tx != end){
-      change = speed*0.01;
-      bx += change;
-      tx += change;
-      updateHitbox(bx, by, tx, ty);     	
-      	
+      bx += speed;
+      tx += speed;
+      this->updateHitbox(bx, by, tx, ty);
+
     }
 }
 
-void Hitbox::verticalMovement(int speed, float end){
-  	float change;
+void Hitbox::verticalMovement(float speed, float end){
   	while(ty != end){
-      change = speed*0.01;
-      by += change;
-      ty += change;
-      updateHitbox(bx, by, tx, ty);     	
-      	
+      by += speed;
+      ty += speed;
+      this->updateHitbox(bx, by, tx, ty);
+
     }
-  
+
+}
+
+float Hitbox::getBX(){
+	return bx;
+}
+
+float Hitbox::getBY(){
+	return by;
+}
+
+float Hitbox::getTX(){
+	return tx;
+}
+
+float Hitbox::getTY(){
+	return ty;
 }
 
 
