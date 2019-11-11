@@ -28,5 +28,5 @@ public:
 	bool overlap(float, float, float, float);
 	void updateHitbox(float, float, float, float);
   	void horizontalMovement(int);
-  	void verticleMovement(int);
+  	void verticalMovement(int);
 };
