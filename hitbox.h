@@ -28,6 +28,10 @@ public:
 	Hitbox(float, float, float, float);
 	bool overlap(float, float, float, float);
 	void updateHitbox(float, float, float, float);
-  	void horizontalMovement(int, float);
-  	void verticalMovement(int, float);
+  	void horizontalMovement(float, float);
+  	void verticalMovement(float, float);
+  	float getBX();
+  	float getBY();
+  	float getTX();
+  	float getTY();
 };
