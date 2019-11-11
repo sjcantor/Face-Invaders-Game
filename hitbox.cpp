@@ -18,14 +18,14 @@ Hitbox::Hitbox(float botx, float boty, float topx, float topy) { //bounds must b
 }
 
 
-bool Hitbox::overlap(float botx, float boty, float topx, float topy){
+bool Hitbox::overlap(Hitbox x){
 	bool overlapped = true;
 
-	if(by > topy || ty < boty){
+	if(by > x.getTY() || ty < x.getBY()){
 		overlapped = false;
 	}
 
-	if(bx > topx || tx < botx){
+	if(bx > x.getTX() || tx < x.getBX()){
 		overlapped = false;
 	}
 	return overlapped;
