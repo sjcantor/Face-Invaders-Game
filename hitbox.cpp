@@ -38,3 +38,12 @@ void Hitbox::updateHitbox(float botx, float boty, float topx, float topy){
 		ty = topy;
 }
 
+void Hitbox::horizontalMovement(int speed){
+  
+}
+
+void Hitbox::verticalMovement(int speed){
+  
+}
+
+
