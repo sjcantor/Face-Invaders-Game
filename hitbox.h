@@ -26,7 +26,7 @@ private:
 public:
 	Hitbox();
 	Hitbox(float, float, float, float);
-	bool overlap(float, float, float, float);
+	bool overlap(Hitbox);
 	void updateHitbox(float, float, float, float);
   	void horizontalMovement(float, float);
   	void verticalMovement(float, float);
