@@ -13,6 +13,7 @@
 #include <typeinfo>
 #include <string>
 #include <ctype.h>
+#include <unistd.h>
 
 using namespace std;
 
