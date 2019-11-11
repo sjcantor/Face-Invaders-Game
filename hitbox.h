@@ -27,4 +27,6 @@ public:
 	Hitbox(float, float, float, float);
 	bool overlap(float, float, float, float);
 	void updateHitbox(float, float, float, float);
+  	void horizontalMovement(int);
+  	void verticleMovement(int);
 };
