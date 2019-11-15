@@ -21,11 +21,10 @@ public:
 	vector<int> pathSteps;
 	vector<int> nextAlienLoc;
 	alien(); 
-	void remove(bool alive);
-	// Missing health class
-	//health::health takeDamage(bool isHit, float playerBulletDmg);
-	//health::health regainHealth(bool regenerationRate); 
-	//health::health shipCrash(); 
+	void remove(bool alive); 
+	float takeDamage(bool isHit, float playerBulletDmg);//returns health
+	float regainHealth(bool regenerationRate); //returns health
+	float shipCrash(); //returns health
 	vector<int> nextSteps(int steps);
 
 };
