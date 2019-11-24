@@ -10,7 +10,7 @@
 
 using namespace std;
 
-class Aline {
+class Alien {
 private: 
 	float health; 
 	int difficulty; 
