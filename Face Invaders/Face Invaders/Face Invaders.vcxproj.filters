@@ -15,39 +15,39 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\alien.h">
+    <ClInclude Include="player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\faceinvaders.h">
+    <ClInclude Include="profshead.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\hitbox.h">
+    <ClInclude Include="ring.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\player.h">
+    <ClInclude Include="alien.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\profshead.h">
+    <ClInclude Include="faceinvaders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ring.h">
+    <ClInclude Include="hitbox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\player.cpp">
+    <ClCompile Include="player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\profshead.cpp">
+    <ClCompile Include="profshead.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\ring.cpp">
+    <ClCompile Include="ring.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\hitbox.cpp">
+    <ClCompile Include="faceinvaders.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\faceinvaders.cpp">
+    <ClCompile Include="hitbox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
