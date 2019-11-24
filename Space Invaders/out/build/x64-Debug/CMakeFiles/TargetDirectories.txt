@@ -1,0 +1,5 @@
+C:/Users/Hoz/source/repos/Space Invaders/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/Hoz/source/repos/Space Invaders/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Hoz/source/repos/Space Invaders/out/build/x64-Debug/Space Invaders/CMakeFiles/CMakeTarget.dir
+C:/Users/Hoz/source/repos/Space Invaders/out/build/x64-Debug/Space Invaders/CMakeFiles/edit_cache.dir
+C:/Users/Hoz/source/repos/Space Invaders/out/build/x64-Debug/Space Invaders/CMakeFiles/rebuild_cache.dir

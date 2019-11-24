@@ -1,0 +1,3 @@
+# pack-refs with: peeled fully-peeled sorted 
+050aaa02bdc2edd12af8d8091ab8f88ceea44d8e refs/heads/master
+248c644e17bdc7ebc6cf8929ba52b8bfcb500791 refs/heads/sdl-testing
