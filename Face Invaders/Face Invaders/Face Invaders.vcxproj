@@ -19,22 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\alien.h" />
-    <ClInclude Include="..\faceinvaders.h" />
-    <ClInclude Include="..\hitbox.h" />
-    <ClInclude Include="..\player.h" />
-    <ClInclude Include="..\profshead.h" />
-    <ClInclude Include="..\ring.h" />
+    <ClInclude Include="faceinvaders.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\hitbox.cpp" />
-    <ClCompile Include="..\player.cpp" />
-    <ClCompile Include="..\profshead.cpp" />
-    <ClCompile Include="..\ring.cpp">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Hoz\schindlerslist\SDL2-2.0.10\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Hoz\schindlerslist\SDL2-2.0.10\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
-    <ClCompile Include="..\faceinvaders.cpp" />
+    <ClCompile Include="faceinvaders.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -87,16 +75,26 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Users\Hoz\schindlerslist\SDL2_image-2.0.5\include;C:\Users\Hoz\schindlerslist\SDL2-2.0.10\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Hoz\schindlerslist\SDL2_image-2.0.5\lib\x86;C:\Users\Hoz\schindlerslist\SDL2-2.0.10\lib\x86;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>C:\Users\Hoz\schindlerslist\SDL2-2.0.10\lib\x86;C:\Users\Hoz\schindlerslist\SDL2_image-2.0.5\lib\x86;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Users\Hoz\schindlerslist\SDL2-2.0.10\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Hoz\schindlerslist\SDL2-2.0.10\lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -108,6 +106,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
