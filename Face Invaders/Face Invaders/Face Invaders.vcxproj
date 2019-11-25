@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="alien.h" />
     <ClInclude Include="faceinvaders.h" />
     <ClInclude Include="hitbox.h" />
@@ -32,6 +33,12 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="profshead.cpp" />
     <ClCompile Include="ring.cpp" />
+=======
+    <ClInclude Include="faceinvaders.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="faceinvaders.cpp" />
+>>>>>>> 6fc3d0ccf0ade3c8e600061e90f5e9cfb4ad20b8
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -85,6 +92,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+<<<<<<< HEAD
+=======
+    <IncludePath>C:\Users\Hoz\schindlerslist\SDL2_image-2.0.5\include;C:\Users\Hoz\schindlerslist\SDL2-2.0.10\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Hoz\schindlerslist\SDL2_image-2.0.5\lib\x86;C:\Users\Hoz\schindlerslist\SDL2-2.0.10\lib\x86;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>C:\Users\Hoz\schindlerslist\SDL2-2.0.10\lib\x86;C:\Users\Hoz\schindlerslist\SDL2_image-2.0.5\lib\x86;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+>>>>>>> 6fc3d0ccf0ade3c8e600061e90f5e9cfb4ad20b8
     <IncludePath>C:\Users\Hoz\schindlerslist\SDL2-2.0.10\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\Hoz\schindlerslist\SDL2-2.0.10\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -94,10 +109,15 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+<<<<<<< HEAD
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+=======
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+>>>>>>> 6fc3d0ccf0ade3c8e600061e90f5e9cfb4ad20b8
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -109,6 +129,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

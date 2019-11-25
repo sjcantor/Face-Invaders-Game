@@ -15,6 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -31,10 +32,14 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="hitbox.h">
+=======
+    <ClInclude Include="faceinvaders.h">
+>>>>>>> 6fc3d0ccf0ade3c8e600061e90f5e9cfb4ad20b8
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClCompile Include="player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -48,6 +53,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="hitbox.cpp">
+=======
+    <ClCompile Include="faceinvaders.cpp">
+>>>>>>> 6fc3d0ccf0ade3c8e600061e90f5e9cfb4ad20b8
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
