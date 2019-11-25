@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "Classes/bullet.h"
 
 int main()
 {
@@ -97,6 +98,14 @@ int main()
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 					{
 						std::cout << "Shoot!" << std::endl;
+						// Get ship position
+						sf::Vector2f position = ship.getPosition();
+						float rotation = ship.getRotation();
+						rotation = 2.36;
+						float speed = 3;
+						//Bullet player_bullet(position.x, position.y, speed, rotation);
+						//Bullet player_bullet(0, 0, 1.0, 2.36);
+						//player_bullet.bulletMovement();
 					}
 					//Right arrow key
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
