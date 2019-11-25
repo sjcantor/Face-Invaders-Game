@@ -4,8 +4,8 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(2100, 1800), "320 Project");
-	printf("Window created and activated\n");
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "320 Project");
+	printf("Window created and activated \n");
 
 	// Load all textures
 	sf::Texture ship_texture;
