@@ -3,13 +3,27 @@
 
 int main()
 {
-	sf::Window window(sf::VideoMode(1900, 900), "320 Project");
+	sf::RenderWindow window(sf::VideoMode(2000, 1000), "320 Project");
 	printf("Window created and activated");
+
+	sf::Texture texture;
+
+	if (!texture.loadFromFile("Images/spaceShip.png"))
+	{
+		std::cout << "Load failed" << std::endl;
+
+		system("pause");
+	}
+
+	sf::Sprite sprite;
+	sprite.setTexture(texture);
+	sprite.setPosition(sf::Vector2f(1000, 500));
+
 
 	while (window.isOpen())
 	{
+		// Check an event and deal with it 
 		sf::Event event;
-
 		while (window.pollEvent(event))
 		{
 			switch (event.type)
@@ -25,5 +39,17 @@ int main()
 			}
 
 		}
+
+		// Make a black window
+		window.clear(sf::Color::Black);
+
+		// Draw something...
+		window.draw(sprite);
+
+		window.display();
+
+
 	}
+
+	return 0;
 }
