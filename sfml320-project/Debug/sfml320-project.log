@@ -1,0 +1,3 @@
+﻿  Main.cpp
+C:\Users\samca\OneDrive\Desktop\schindlerslist\sfml320-project\Main.cpp(104,22): warning C4305: '=': truncation from 'double' to 'float'
+  sfml320-project.vcxproj -> C:\Users\samca\OneDrive\Desktop\schindlerslist\sfml320-project\Debug\sfml320-project.exe
