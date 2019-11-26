@@ -32,13 +32,13 @@ void Bullet::bulletMovement(){
 		x = x + xincr;
 		y = y + yincr;
 		updateBullet(x, y);
-		cout << "X: ";
+		cout << "XX: ";
 		cout << x << endl;
-		cout << "Y: ";
+		cout << "YY: ";
 		cout << y << endl;
-		if(x > 100 || y > 100){
+		/*if(x > 100 || y > 100){
 			z = 0;
-		}
+		}*/
 
 	}
 
