@@ -5,7 +5,7 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1920, 1080), "320 Project");
+	sf::RenderWindow window(sf::VideoMode(1920*0.8, 1080*0.8), "320 Project");
 	printf("Window created and activated \n");
 
 	// Load all textures

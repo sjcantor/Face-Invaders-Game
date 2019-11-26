@@ -1,3 +1,4 @@
 ﻿  Main.cpp
-C:\Users\samca\OneDrive\Desktop\schindlerslist\sfml320-project\Main.cpp(104,22): warning C4305: '=': truncation from 'double' to 'float'
-  sfml320-project.vcxproj -> C:\Users\samca\OneDrive\Desktop\schindlerslist\sfml320-project\Debug\sfml320-project.exe
+C:\Users\Hoz\schindlerslist\sfml320-project\Main.cpp(8,54): warning C4244:  'argument': conversion from 'double' to 'unsigned int', possible loss of data
+C:\Users\Hoz\schindlerslist\sfml320-project\Main.cpp(8,44): warning C4244:  'argument': conversion from 'double' to 'unsigned int', possible loss of data
+  sfml320-project.vcxproj -> C:\Users\Hoz\schindlerslist\sfml320-project\Debug\sfml320-project.exe
