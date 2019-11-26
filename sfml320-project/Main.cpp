@@ -5,14 +5,18 @@
 #include <string>
 #include <sstream>
 #include <cstdlib>
-int rand();
 #include <chrono>
 #include <thread>
 #define PI 3.14159265358979323846
 
+int difficulty = 1;
+int rand();
 double anglePos = 0;
 const int numAliens = 6;
+const int numAliens1 = 8;
+const int numAliens2 = 10;
 int r = 600;
+int score_count = 0;
 class alien {
 public:
 	sf::Sprite sprite;
@@ -64,6 +68,12 @@ int main()
 	//lives.setScale(4, 4);
 	lives.setPosition(1400, 800);
 
+	sf::Text score;
+	score.setFont(font);
+	score.setCharacterSize(124);
+	score.setFillColor(sf::Color::White);
+	score.setPosition(100, 800);
+
 	sf::Text press_space;
 	press_space.setFont(font);
 	press_space.setCharacterSize(200);
@@ -82,8 +92,9 @@ int main()
 	game_over.setFont(font);
 	game_over.setCharacterSize(130);
 	game_over.setFillColor(sf::Color::White);
-	game_over.setPosition(300, 800);
-	game_over.setString("Game over :(");
+	game_over.setPosition(50, 400);
+	game_over.setString("Game over :(\nPress Space\nto restart");
+
 
 
 
@@ -148,6 +159,32 @@ int main()
 		aliens[i].sprite.setScale(7, 7);
 	}
 
+	r = 600;
+	alien aliens1[numAliens1];
+
+	for (int i = 0; i < numAliens1; i++) {
+		aliens1[i].r = r;
+		aliens1[i].alienAnglePos = (2 * PI) / numAliens1 * i;
+		aliens1[i].sprite.setTexture(alien_texture);
+		aliens1[i].alien_size = aliens1[i].sprite.getGlobalBounds();
+		aliens1[i].sprite.setOrigin(sf::Vector2f(aliens1[i].alien_size.width / 2, aliens1[i].alien_size.height / 2));
+		aliens1[i].sprite.setPosition(aliens1[i].r * std::sin(aliens1[i].alienAnglePos) + (1920 / 2), aliens1[i].r * std::cos(aliens1[i].alienAnglePos) + (1080 / 2));
+		aliens1[i].sprite.setRotation(-aliens1[i].alienAnglePos * 180 / PI + 180);
+		aliens1[i].sprite.setScale(7, 7);
+	}
+
+	alien aliens2[numAliens2];
+
+	for (int i = 0; i < numAliens2; i++) {
+		aliens2[i].r = r;
+		aliens2[i].alienAnglePos = (2 * PI) / numAliens2 * i;
+		aliens2[i].sprite.setTexture(alien_texture);
+		aliens2[i].alien_size = aliens2[i].sprite.getGlobalBounds();
+		aliens2[i].sprite.setOrigin(sf::Vector2f(aliens2[i].alien_size.width / 2, aliens2[i].alien_size.height / 2));
+		aliens2[i].sprite.setPosition(aliens2[i].r * std::sin(aliens2[i].alienAnglePos) + (1920 / 2), aliens2[i].r * std::cos(aliens2[i].alienAnglePos) + (1080 / 2));
+		aliens2[i].sprite.setRotation(-aliens2[i].alienAnglePos * 180 / PI + 180);
+		aliens2[i].sprite.setScale(7, 7);
+	}
 	// Set origins for sprites
 	sf::Rect<float> ship_size = ship.getGlobalBounds();
 	ship.setOrigin(sf::Vector2f(ship_size.width / 2, ship_size.height / 2));
@@ -196,16 +233,27 @@ int main()
 	//ship.setScale(30, 30);
 	// to scale based on current scale:
 	//ship.scale(2,2)  //make it (60,60) in this case
-
+	std::chrono::high_resolution_clock::time_point t0;
+	std::chrono::high_resolution_clock::time_point t1;
+	std::chrono::high_resolution_clock::time_point t2;
+	double oneSec = 1;
+	double lvl1 = 10;
+	double lvl2 = 15;
+	double lvl3 = 20;
 	while (window.isOpen())
 	{
 		// Check an event and deal with it 
 		sf::Event event;
 		bool started = false;
 		bool gameOver = false;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { started = true; }
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { 
+			started = true; 
+			t0 = std::chrono::high_resolution_clock::now();
+			t1 = std::chrono::high_resolution_clock::now();
+		}
 		while (started)
 		{
+
 			while (window.pollEvent(event))
 			{
 				switch (event.type)
@@ -232,6 +280,7 @@ int main()
 			//Spacebar
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
+				
 				std::cout << "Shoot!" << std::endl;
 				// Get ship position
 				sf::Vector2f position = ship.getPosition();
@@ -259,30 +308,94 @@ int main()
 			bullet_tuple = player_bullet.bulletMovement();
 			bullet.setPosition(get<0>(bullet_tuple), get<1>(bullet_tuple));
 			//bullet2.setPosition(player_bullet[1].getX(), player_bullet[1].getY());
-			for (int i = 0; i < numAliens; i++)
-			{
-				if (aliens[i].sprite.getGlobalBounds().intersects(bullet.getGlobalBounds()))
+			if (difficulty == 1 || difficulty == 2) {
+				for (int i = 0; i < numAliens; i++)
 				{
-					std::cout << "Collision" << std::endl;
-					aliens[i].r = 800;
-					aliens[i].sprite.setPosition(aliens[i].r * std::sin(aliens[i].alienAnglePos) + (1920 / 2), aliens[i].r * std::cos(aliens[i].alienAnglePos) + (1080 / 2));
-					//alienHit = true;
-					//alien.setPosition((rand() % 1500), (rand() % 400) + 400); // THIS IS BAD
-					if (grade < 4) { grade++; }
+					if (aliens[i].sprite.getGlobalBounds().intersects(bullet.getGlobalBounds()))
+					{
+						std::cout << "Collision" << std::endl;
+						aliens[i].r = 800;
+						aliens[i].sprite.setPosition(aliens[i].r * std::sin(aliens[i].alienAnglePos) + (1920 / 2), aliens[i].r * std::cos(aliens[i].alienAnglePos) + (1080 / 2));
+						aliens[i].sprite.setRotation(-aliens[i].alienAnglePos * 180 / PI + 180);
+						//alienHit = true;
+						//alien.setPosition((rand() % 1500), (rand() % 400) + 400); // THIS IS BAD
+						if (grade < 4) { grade++; }
+					}
+					if (aliens[i].sprite.getGlobalBounds().intersects(ship.getGlobalBounds()))
+					{
+						aliens[i].r = 800;
+						aliens[i].sprite.setPosition(aliens[i].r * std::sin(aliens[i].alienAnglePos) + (1920 / 2), aliens[i].r * std::cos(aliens[i].alienAnglePos) + (1080 / 2));
+						std::cout << "Collision" << std::endl;
+						aliens[i].sprite.setRotation(-aliens[i].alienAnglePos * 180 / PI + 180);
+						//alien.setPosition((rand() % 1500), (rand() % 400) + 400); // THIS IS BAD
+						if (grade > 0) { grade--; }
+					}
+					if (aliens[i].sprite.getGlobalBounds().intersects(proface.getGlobalBounds()))
+					{
+						std::cout << "Collision" << std::endl;
+						grade = 0;
+						gameOver = true;
+					}
 				}
-				if (aliens[i].sprite.getGlobalBounds().intersects(ship.getGlobalBounds()))
+			}
+			else if (difficulty == 3) {
+				for (int i = 0; i < numAliens1; i++)
 				{
-					aliens[i].r = 800;
-					aliens[i].sprite.setPosition(aliens[i].r* std::sin(aliens[i].alienAnglePos) + (1920 / 2), aliens[i].r* std::cos(aliens[i].alienAnglePos) + (1080 / 2));
-					std::cout << "Collision" << std::endl;
-					//alien.setPosition((rand() % 1500), (rand() % 400) + 400); // THIS IS BAD
-					if (grade > 0) { grade--; }
+					if (aliens1[i].sprite.getGlobalBounds().intersects(bullet.getGlobalBounds()))
+					{
+						std::cout << "Collision" << std::endl;
+						aliens1[i].r = 800;
+						aliens1[i].sprite.setPosition(aliens1[i].r * std::sin(aliens1[i].alienAnglePos) + (1920 / 2), aliens1[i].r * std::cos(aliens1[i].alienAnglePos) + (1080 / 2));
+						aliens1[i].sprite.setRotation(-aliens1[i].alienAnglePos * 180 / PI + 180);
+						//alienHit = true;
+						//alien.setPosition((rand() % 1500), (rand() % 400) + 400); // THIS IS BAD
+						if (grade < 4) { grade++; }
+					}
+					if (aliens1[i].sprite.getGlobalBounds().intersects(ship.getGlobalBounds()))
+					{
+						aliens1[i].r = 800;
+						aliens1[i].sprite.setPosition(aliens1[i].r * std::sin(aliens1[i].alienAnglePos) + (1920 / 2), aliens1[i].r * std::cos(aliens1[i].alienAnglePos) + (1080 / 2));
+						std::cout << "Collision" << std::endl;
+						aliens1[i].sprite.setRotation(-aliens1[i].alienAnglePos * 180 / PI + 180);
+						//alien.setPosition((rand() % 1500), (rand() % 400) + 400); // THIS IS BAD
+						if (grade > 0) { grade--; }
+					}
+					if (aliens1[i].sprite.getGlobalBounds().intersects(proface.getGlobalBounds()))
+					{
+						std::cout << "Collision" << std::endl;
+						grade = 0;
+						gameOver = true;
+					}
 				}
-				if (aliens[i].sprite.getGlobalBounds().intersects(proface.getGlobalBounds()))
+			}
+			else if (difficulty == 4) {
+				for (int i = 0; i < numAliens2; i++)
 				{
-					std::cout << "Collision" << std::endl;
-					grade = 0;
-					gameOver = true;
+					if (aliens2[i].sprite.getGlobalBounds().intersects(bullet.getGlobalBounds()))
+					{
+						std::cout << "Collision" << std::endl;
+						aliens2[i].r = 800;
+						aliens2[i].sprite.setPosition(aliens2[i].r * std::sin(aliens2[i].alienAnglePos) + (1920 / 2), aliens2[i].r * std::cos(aliens2[i].alienAnglePos) + (1080 / 2));
+						aliens2[i].sprite.setRotation(-aliens2[i].alienAnglePos * 180 / PI + 180);
+						//alienHit = true;
+						//alien.setPosition((rand() % 1500), (rand() % 400) + 400); // THIS IS BAD
+						if (grade < 4) { grade++; }
+					}
+					if (aliens2[i].sprite.getGlobalBounds().intersects(ship.getGlobalBounds()))
+					{
+						aliens2[i].r = 800;
+						aliens2[i].sprite.setPosition(aliens2[i].r * std::sin(aliens2[i].alienAnglePos) + (1920 / 2), aliens2[i].r * std::cos(aliens2[i].alienAnglePos) + (1080 / 2));
+						std::cout << "Collision" << std::endl;
+						aliens2[i].sprite.setRotation(-aliens2[i].alienAnglePos * 180 / PI + 180);
+						//alien.setPosition((rand() % 1500), (rand() % 400) + 400); // THIS IS BAD
+						if (grade > 0) { grade--; }
+					}
+					if (aliens2[i].sprite.getGlobalBounds().intersects(proface.getGlobalBounds()))
+					{
+						std::cout << "Collision" << std::endl;
+						grade = 0;
+						gameOver = true;
+					}
 				}
 			}
 			if (grade == 0) { gameOver = true; }
@@ -290,14 +403,62 @@ int main()
 			oss << "Grade: " << gradeLetter[grade];
 			std::string gradeStr = oss.str();
 			lives.setString(gradeStr);
+			t2 = std::chrono::high_resolution_clock::now();
+			auto time_span1 = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);
+			if (time_span1.count() > oneSec) {
+				score_count += (grade * 1 * difficulty);
+				t1 = std::chrono::high_resolution_clock::now();
+			}
+			std::ostringstream osss;
+			osss << "Score: " << score_count;
+			std::string scoreStr = osss.str();
+			score.setString(scoreStr);
 
+			auto time_span0 = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t0);
+			if (time_span0.count() > lvl1 && time_span0.count() < lvl2) {
+				difficulty = 2;
+			}
+			else if (time_span0.count() > lvl2 && time_span0.count() < lvl3) {
+				if (difficulty != 3) {
+					difficulty = 3;
+					window.clear();
+					}
+			}
+
+			else if (time_span0.count() > lvl3) {
+				if (difficulty != 4) {
+					difficulty = 4;
+					window.clear();
+				}
+
+			}
+			cout << difficulty << endl;
+			cout << time_span0.count() << endl;
 			control_motion++;
-			if (control_motion % 20 == 0) {
-				for (int i = 0; i < numAliens; i++) {
-					aliens[i].r -= (rand() % 15);
-					aliens[i].alienAnglePos += float((float(rand() % 11) - 5) / 50);
-					aliens[i].sprite.setPosition(aliens[i].r * std::sin(aliens[i].alienAnglePos) + (1920 / 2), aliens[i].r * std::cos(aliens[i].alienAnglePos) + (1080 / 2));
-					aliens[i].sprite.setRotation(-aliens[i].alienAnglePos * 180 / PI + 180);
+			if (control_motion % (30/difficulty) == 0) {
+				if (difficulty == 1 || difficulty == 2) {
+					for (int i = 0; i < numAliens; i++) {
+						aliens[i].r -= ((rand() % 10) * difficulty);
+						aliens[i].alienAnglePos += float(((double(rand() % 11) - 5) / 50) * difficulty);
+						aliens[i].sprite.setPosition(aliens[i].r * std::sin(aliens[i].alienAnglePos) + (1920 / 2), aliens[i].r * std::cos(aliens[i].alienAnglePos) + (1080 / 2));
+						aliens[i].sprite.setRotation(-aliens[i].alienAnglePos * 180 / PI + 180);
+					}
+				}
+				else if (difficulty == 3) {
+					for (int i = 0; i < numAliens1; i++) {
+						aliens1[i].r -= ((rand() % 10) * difficulty/2);
+						aliens1[i].alienAnglePos += float(((double(rand() % 11) - 5) / 50) * difficulty);
+						aliens1[i].sprite.setPosition(aliens1[i].r * std::sin(aliens1[i].alienAnglePos) + (1920 / 2), aliens1[i].r * std::cos(aliens1[i].alienAnglePos) + (1080 / 2));
+						aliens1[i].sprite.setRotation(-aliens1[i].alienAnglePos * 180 / PI + 180);
+					}
+				}
+				else if (difficulty == 4) {
+					for (int i = 0; i < numAliens2; i++) {
+						aliens2[i].r -= ((rand() % 10) * difficulty/4);
+						aliens2[i].alienAnglePos += float(((double(rand() % 11) - 5) / 50) * difficulty);
+						aliens2[i].sprite.setPosition(aliens2[i].r * std::sin(aliens2[i].alienAnglePos) + (1920 / 2), aliens2[i].r * std::cos(aliens2[i].alienAnglePos) + (1080 / 2));
+						aliens2[i].sprite.setRotation(-aliens2[i].alienAnglePos * 180 / PI + 180);
+					}
 				}
 				control_motion = 0;
 			}
@@ -331,10 +492,23 @@ int main()
 			// Make a black window
 			window.clear(sf::Color::Black);
 			window.draw(background);
-
-			for (int i = 0; i < numAliens; i++)
-			{
-				window.draw(aliens[i].sprite);
+			if (difficulty == 1 || difficulty == 2) {
+				for (int i = 0; i < numAliens; i++)
+				{
+					window.draw(aliens[i].sprite);
+				}
+			}
+			else if (difficulty == 3) {
+				for (int i = 0; i < numAliens1; i++)
+				{
+					window.draw(aliens1[i].sprite);
+				}
+			}
+			else if (difficulty == 4) {
+				for (int i = 0; i < numAliens2; i++)
+				{
+					window.draw(aliens2[i].sprite);
+				}
 			}
 
 			// This is where you draw...
@@ -346,6 +520,7 @@ int main()
 			window.draw(ship);
 			window.draw(proface);
 			window.draw(lives);
+			window.draw(score);
 
 
 			// End the current frame
@@ -364,12 +539,36 @@ int main()
 				window.draw(ship);
 				window.draw(proface);
 				window.draw(lives);
-				
+				window.draw(score);
 				window.draw(game_over);
 				window.display();
-				std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-				window.close();
-
+				std::this_thread::sleep_for(std::chrono::milliseconds(50));
+				started = false;
+				difficulty = 1;
+				score_count = 0;
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+					gameOver = false;
+					grade = 1;
+					r = 600;
+					for (int i = 0; i < numAliens; i++) {
+						aliens[i].r = r;
+						aliens[i].alienAnglePos = (2 * PI) / numAliens * i;
+						aliens[i].sprite.setPosition(aliens[i].r * std::sin(aliens[i].alienAnglePos) + (1920 / 2), aliens[i].r * std::cos(aliens[i].alienAnglePos) + (1080 / 2));
+						aliens[i].sprite.setRotation(-aliens[i].alienAnglePos * 180 / PI + 180);
+					}
+					for (int i = 0; i < numAliens1; i++) {
+						aliens1[i].r = r;
+						aliens1[i].alienAnglePos = (2 * PI) / numAliens1 * i;
+						aliens1[i].sprite.setPosition(aliens1[i].r * std::sin(aliens1[i].alienAnglePos) + (1920 / 2), aliens1[i].r * std::cos(aliens1[i].alienAnglePos) + (1080 / 2));
+						aliens1[i].sprite.setRotation(-aliens1[i].alienAnglePos * 180 / PI + 180);
+					}
+					for (int i = 0; i < numAliens2; i++) {
+						aliens2[i].r = r;
+						aliens2[i].alienAnglePos = (2 * PI) / numAliens2 * i;
+						aliens2[i].sprite.setPosition(aliens2[i].r * std::sin(aliens2[i].alienAnglePos) + (1920 / 2), aliens2[i].r * std::cos(aliens2[i].alienAnglePos) + (1080 / 2));
+						aliens2[i].sprite.setRotation(-aliens2[i].alienAnglePos * 180 / PI + 180);
+					}
+				}
 			}
 
 		}
