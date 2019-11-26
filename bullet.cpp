@@ -52,6 +52,14 @@ float Bullet::getY(){
 	return y;
 }
 
+void Bullet::setX(float nx){
+	x = nx;
+}
+void Bullet::setY(float ny){
+	y = ny;
+}
+
+
 
 
 
