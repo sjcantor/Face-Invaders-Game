@@ -115,45 +115,34 @@ int main()
 
 				// key pressed
 				case sf::Event::KeyPressed:
-					//Spacebar
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-					{
-						std::cout << "Shoot!" << std::endl;
-						// Get ship position
-						sf::Vector2f position = ship.getPosition();
-						float rotation = ship.getRotation();
-						player_bullet.setX(position.x);
-						player_bullet.setY(position.y);
-						player_bullet.setAng(rotation);
-						player_bullet.setSpd(1);
-					}
-					//Right arrow key
-					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-					{
-						ship.rotate(30);
-					}
-					//Left arrow key
-					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-					{
-						ship.rotate(-30);
-					}
-					//Up arrow key
-					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-					{
-						ship.move(0, -50);
-					}
-					//Down arrow key
-					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-					{
-						ship.move(0, 50);
-					}
+					
 					break;
 
-				// Don't process other events
-				default:
-					break;
 			}
 
+		}
+		// update game
+		//Spacebar
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
+			std::cout << "Shoot!" << std::endl;
+			// Get ship position
+			sf::Vector2f position = ship.getPosition();
+			float rotation = ship.getRotation();
+			player_bullet.setX(position.x);
+			player_bullet.setY(position.y);
+			player_bullet.setAng(rotation);
+			player_bullet.setSpd(2);
+		}
+		//Right arrow key
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			ship.rotate(1.5);
+		}
+		//Left arrow key
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			ship.rotate(-1.5);
 		}
 		tuple <float, float> bullet_tuple;
 		bullet_tuple = player_bullet.bulletMovement();
@@ -166,7 +155,14 @@ int main()
 
 		// This is where you draw...
 		window.draw(background);
-		window.draw(alien);
+		if (alien.getGlobalBounds().intersects(bullet.getGlobalBounds()))
+		{
+			std::cout << "Collision" << std::endl;
+		}
+		else
+		{
+			window.draw(alien);
+		}
 		window.draw(ship);
 		window.draw(bullet);
 		//window.draw(bullet2);
