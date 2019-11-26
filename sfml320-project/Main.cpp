@@ -272,6 +272,8 @@ int main()
 				}
 				if (aliens[i].sprite.getGlobalBounds().intersects(ship.getGlobalBounds()))
 				{
+					aliens[i].r = 800;
+					aliens[i].sprite.setPosition(aliens[i].r* std::sin(aliens[i].alienAnglePos) + (1920 / 2), aliens[i].r* std::cos(aliens[i].alienAnglePos) + (1080 / 2));
 					std::cout << "Collision" << std::endl;
 					//alien.setPosition((rand() % 1500), (rand() % 400) + 400); // THIS IS BAD
 					if (grade > 0) { grade--; }
