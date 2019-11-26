@@ -26,7 +26,7 @@ public:
 	Bullet();
 	Bullet(float, float, float, float);
 	void updateBullet(float, float);
-	void bulletMovement();
+	tuple<float, float> bulletMovement();
 	float getX();
 	float getY();
 	float getAng();

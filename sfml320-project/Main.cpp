@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Classes/bullet.cpp"
+#include <tuple>
 
 int main()
 {
@@ -54,10 +55,10 @@ int main()
 	sf::Sprite background;
 	background.setTexture(background_texture);
 
-	sf::Sprite bullet1;
-	bullet1.setTexture(bullet_texture);
-	sf::Sprite bullet2;
-	bullet2.setTexture(bullet_texture);
+	sf::Sprite bullet;
+	bullet.setTexture(bullet_texture);
+	//sf::Sprite bullet2;
+	//bullet2.setTexture(bullet_texture);
 
 
 	// Set origins for sprites
@@ -65,26 +66,26 @@ int main()
 	ship.setOrigin(sf::Vector2f(ship_size.width / 2, ship_size.height / 2));
 
 	// Set initial positions for sprites	
-	ship.setPosition(sf::Vector2f(1050, 900));
+	ship.setPosition(sf::Vector2f(960, 540));
 	alien.setPosition(sf::Vector2f(800, 100));
 	sf::Rect<float> proface_size = proface.getGlobalBounds();
 	proface.setOrigin(sf::Vector2f(proface_size.width / 2, proface_size.height / 2));
 	proface.setPosition(sf::Vector2f(1920 / 2, 1080 / 2));
 	background.setPosition(sf::Vector2f(0, 0));
-	bullet1.setPosition(sf::Vector2f(-10, -10));
-	bullet2.setPosition(sf::Vector2f(-10, -10));
+	bullet.setPosition(sf::Vector2f(-10, -10));
+	//bullet2.setPosition(sf::Vector2f(-10, -10));
 
 	// Scale initial sprites
 	ship.setScale(10, 10);
 	alien.setScale(7, 7);
 	proface.setScale(0.4, 0.4);
 	background.setScale(3, 3);
-	bullet1.setScale(2, 2);
-	bullet2.setScale(2, 2);
+	bullet.setScale(2, 2);
+	//bullet2.setScale(2, 2);
 
-	Bullet player_bullet[2];
-	player_bullet[0] = Bullet(-10, -10, 2, 0);
-	player_bullet[1] = Bullet(-10, -10, 2, 0);
+	Bullet player_bullet;
+	player_bullet = Bullet(-10, -10, 0, 0);
+	//player_bullet[1] = Bullet(-10, -10, 2, 0);
 	int i = 0;
 
 
@@ -129,51 +130,39 @@ int main()
 
 				// key pressed
 				case sf::Event::KeyPressed:
-					//Spacebar
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-					{
-						std::cout << "Shoot!" << std::endl;
-						// Get ship position
-						sf::Vector2f position = ship.getPosition();
-						float rotation = ship.getRotation();
-						float speed = 3;
-						player_bullet[i%2].setX(position.x);
-						player_bullet[i % 2].setY(position.y);
-						player_bullet[i % 2].setAng(rotation);
-						player_bullet[i%2].bulletMovement();
-						i++;
-					}
-					//Right arrow key
-					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-					{
-						ship.rotate(45);
-					}
-					//Left arrow key
-					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-					{
-						ship.rotate(-45);
-					}
-					//Up arrow key
-					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-					{
-						ship.move(0, -50);
-					}
-					//Down arrow key
-					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-					{
-						ship.move(0, 50);
-					}
+					
 					break;
 
-				// Don't process other events
-				default:
-					break;
 			}
 
 		}
-		
-		bullet1.setPosition(player_bullet[0].getX(), player_bullet[0].getY());
-		bullet2.setPosition(player_bullet[1].getX(), player_bullet[1].getY());
+		// update game
+		//Spacebar
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
+			std::cout << "Shoot!" << std::endl;
+			// Get ship position
+			sf::Vector2f position = ship.getPosition();
+			float rotation = ship.getRotation();
+			player_bullet.setX(position.x);
+			player_bullet.setY(position.y);
+			player_bullet.setAng(rotation);
+			player_bullet.setSpd(2);
+		}
+		//Right arrow key
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			ship.rotate(1.5);
+		}
+		//Left arrow key
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			ship.rotate(-1.5);
+		}
+		tuple <float, float> bullet_tuple;
+		bullet_tuple = player_bullet.bulletMovement();
+		bullet.setPosition(get<0>(bullet_tuple), get<1>(bullet_tuple));
+		//bullet2.setPosition(player_bullet[1].getX(), player_bullet[1].getY());
 
 
 		// Make a black window
@@ -181,8 +170,16 @@ int main()
 
 		// This is where you draw...
 		window.draw(background);
-		window.draw(alien);
+		if (alien.getGlobalBounds().intersects(bullet.getGlobalBounds()))
+		{
+			std::cout << "Collision" << std::endl;
+		}
+		else
+		{
+			window.draw(alien);
+		}
 		window.draw(ship);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		window.draw(proface);
 		window.draw(bullet);
@@ -190,6 +187,10 @@ int main()
 =======
 		window.draw(bullet1);
 		window.draw(bullet2);
+>>>>>>> origin/master
+=======
+		window.draw(bullet);
+		//window.draw(bullet2);
 >>>>>>> origin/master
 
 

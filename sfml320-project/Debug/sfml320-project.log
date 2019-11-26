@@ -1,3 +1,8 @@
 ﻿  Main.cpp
+<<<<<<< HEAD
 C:\Users\Hoz\schindlerslist\sfml320-project\Main.cpp(77,27): warning C4305:  'argument': truncation from 'double' to 'float'
   sfml320-project.vcxproj -> C:\Users\Hoz\schindlerslist\sfml320-project\Debug\sfml320-project.exe
+=======
+C:\Users\samca\OneDrive\Desktop\schindlerslist\sfml320-project\Classes\bullet.cpp(47,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  sfml320-project.vcxproj -> C:\Users\samca\OneDrive\Desktop\schindlerslist\sfml320-project\Debug\sfml320-project.exe
+>>>>>>> origin/master
