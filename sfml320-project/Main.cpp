@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "Classes/bullet.h"
 #include "Classes/bullet.cpp"
 
 int main()
@@ -12,6 +11,7 @@ int main()
 	sf::Texture ship_texture;
 	sf::Texture alien_texture;
 	sf::Texture background_texture;
+	sf::Texture bullet_texture;
 
 	// Load files to texture
 	if (!ship_texture.loadFromFile("Images/spaceShip.png"))
@@ -29,6 +29,11 @@ int main()
 		std::cout << "Load failed" << std::endl;
 		system("pause");
 	}
+	if (!bullet_texture.loadFromFile("Images/bullet.png"))
+	{
+		std::cout << "Load failed" << std::endl;
+		system("pause");
+	}
 
 	// Make sprites from textures
 	sf::Sprite ship;
@@ -40,6 +45,9 @@ int main()
 	sf::Sprite background;
 	background.setTexture(background_texture);
 
+	sf::Sprite bullet;
+	bullet.setTexture(bullet_texture);
+
 	// Set origins for sprites
 	sf::Rect<float> ship_size = ship.getGlobalBounds();
 	ship.setOrigin(sf::Vector2f(ship_size.width / 2, ship_size.height / 2));
@@ -48,11 +56,13 @@ int main()
 	ship.setPosition(sf::Vector2f(1050, 900));
 	alien.setPosition(sf::Vector2f(800, 100));
 	background.setPosition(sf::Vector2f(0, 0));
+	bullet.setPosition(sf::Vector2f(-10, -10));
 
 	// Scale initial sprites
 	ship.setScale(10, 10);
 	alien.setScale(7, 7);
 	background.setScale(3, 3);
+	bullet.setScale(2, 2);
 
 
 	
@@ -104,7 +114,7 @@ int main()
 						float rotation = ship.getRotation();
 						float speed = 3;
 						Bullet player_bullet(position.x, position.y, speed, rotation);
-						//Bullet player_bullet(0, 0, 1.0, 2.36);
+						bullet.setPosition(position.x, position.y);
 						//player_bullet.bulletMovement();
 					}
 					//Right arrow key
@@ -135,14 +145,16 @@ int main()
 			}
 
 		}
+		bullet.move(sf::Vector2f(0, -2));
 
 		// Make a black window
 		window.clear(sf::Color::Black);
 
 		// This is where you draw...
 		window.draw(background);
-		window.draw(ship);
 		window.draw(alien);
+		window.draw(ship);
+		window.draw(bullet);
 
 
 		// End the current frame
