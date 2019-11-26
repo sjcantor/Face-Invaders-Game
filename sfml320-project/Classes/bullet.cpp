@@ -52,6 +52,29 @@ float Bullet::getY(){
 	return y;
 }
 
+float Bullet::getSpd(){
+	return speed;
+}
+
+float Bullet::getAng(){
+	return angle;
+}
+
+void Bullet::setX(float nx){
+	x = nx;
+}
+void Bullet::setY(float ny){
+	y = ny;
+}
+
+void Bullet::setAng(float nang){
+	angle = nang;
+}
+void Bullet::setSpd(float nspd){
+	speed = nspd;
+}
+
+
 
 
 

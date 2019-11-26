@@ -45,8 +45,10 @@ int main()
 	sf::Sprite background;
 	background.setTexture(background_texture);
 
-	sf::Sprite bullet;
-	bullet.setTexture(bullet_texture);
+	sf::Sprite bullet1;
+	bullet1.setTexture(bullet_texture);
+	sf::Sprite bullet2;
+	bullet2.setTexture(bullet_texture);
 
 	// Set origins for sprites
 	sf::Rect<float> ship_size = ship.getGlobalBounds();
@@ -56,13 +58,20 @@ int main()
 	ship.setPosition(sf::Vector2f(1050, 900));
 	alien.setPosition(sf::Vector2f(800, 100));
 	background.setPosition(sf::Vector2f(0, 0));
-	bullet.setPosition(sf::Vector2f(-10, -10));
+	bullet1.setPosition(sf::Vector2f(-10, -10));
+	bullet2.setPosition(sf::Vector2f(-10, -10));
 
 	// Scale initial sprites
 	ship.setScale(10, 10);
 	alien.setScale(7, 7);
 	background.setScale(3, 3);
-	bullet.setScale(2, 2);
+	bullet1.setScale(2, 2);
+	bullet2.setScale(2, 2);
+
+	Bullet player_bullet[2];
+	player_bullet[0] = Bullet(-10, -10, 2, 0);
+	player_bullet[1] = Bullet(-10, -10, 2, 0);
+	int i = 0;
 
 
 	
@@ -113,9 +122,11 @@ int main()
 						sf::Vector2f position = ship.getPosition();
 						float rotation = ship.getRotation();
 						float speed = 3;
-						Bullet player_bullet(position.x, position.y, speed, rotation);
-						bullet.setPosition(position.x, position.y);
-						//player_bullet.bulletMovement();
+						player_bullet[i%2].setX(position.x);
+						player_bullet[i % 2].setY(position.y);
+						player_bullet[i % 2].setAng(rotation);
+						player_bullet[i%2].bulletMovement();
+						i++;
 					}
 					//Right arrow key
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
@@ -145,7 +156,10 @@ int main()
 			}
 
 		}
-		bullet.move(sf::Vector2f(0, -2));
+		
+		bullet1.setPosition(player_bullet[0].getX(), player_bullet[0].getY());
+		bullet2.setPosition(player_bullet[1].getX(), player_bullet[1].getY());
+
 
 		// Make a black window
 		window.clear(sf::Color::Black);
@@ -154,7 +168,8 @@ int main()
 		window.draw(background);
 		window.draw(alien);
 		window.draw(ship);
-		window.draw(bullet);
+		window.draw(bullet1);
+		window.draw(bullet2);
 
 
 		// End the current frame
