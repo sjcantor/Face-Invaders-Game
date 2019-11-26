@@ -2,14 +2,90 @@
 #include <iostream>
 #include "Classes/bullet.cpp"
 #include <tuple>
+#include <string>
+#include <sstream>
+#include <cstdlib>
+int rand();
+#include <chrono>
+#include <thread>
 #define PI 3.14159265358979323846
 
 double anglePos = 0;
+const int numAliens = 6;
+int r = 600;
+class alien {
+public:
+	sf::Sprite sprite;
+	sf::Rect<float> alien_size;
+	double alienAnglePos;
+	bool alive;
+	int r;
+	alien(double angle, bool Alive, int rIn, sf::Texture texture);
+	alien();
+};
+alien::alien() {
+	alive = true;
+	alienAnglePos = 1;
+	alien_size = sprite.getGlobalBounds();
+	sprite.setOrigin(sf::Vector2f(alien_size.width / 2, alien_size.height / 2));
+}
+alien::alien(double angle, bool Alive, int rIn, sf::Texture texture) {
+	alienAnglePos = angle;
+	alive = Alive;
+	r = rIn;
+	sprite.setTexture(texture);
+	alien_size = sprite.getGlobalBounds();
+	sprite.setOrigin(sf::Vector2f(alien_size.width / 2, alien_size.height / 2));
+}
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1920, 1080), "320 Project");
+	window.setFramerateLimit(60);
 	printf("Window created and activated \n");
+
+	unsigned int control_motion = 0;
+	bool alienHit = false;
+	int gradeNum[] = { 0, 1, 2, 3, 4 };
+	char gradeLetter[] = { 'F', 'D', 'C', 'B', 'A' };
+	int grade = 1;
+
+
+	// Load font
+	sf::Font font;
+	if (!font.loadFromFile("Images/bender.otf"))
+	{
+		std::cout << "Font load failed" << std::endl;
+	}
+	sf::Text lives;
+	lives.setFont(font);
+	lives.setCharacterSize(124);
+	lives.setFillColor(sf::Color::White);
+	//lives.setScale(4, 4);
+	lives.setPosition(1400, 800);
+
+	sf::Text press_space;
+	press_space.setFont(font);
+	press_space.setCharacterSize(200);
+	press_space.setFillColor(sf::Color::White);
+	press_space.setPosition(300, 0);
+	press_space.setString("Face Invaders");
+
+	sf::Text title;
+	title.setFont(font);
+	title.setCharacterSize(130);
+	title.setFillColor(sf::Color::White);
+	title.setPosition(300, 800);
+	title.setString("Press SPACE to start");
+
+	sf::Text game_over;
+	game_over.setFont(font);
+	game_over.setCharacterSize(130);
+	game_over.setFillColor(sf::Color::White);
+	game_over.setPosition(300, 800);
+	game_over.setString("Game over :(");
+
+
 
 	// Load all textures
 	sf::Texture ship_texture;
@@ -21,36 +97,33 @@ int main()
 	// Load files to texture
 	if (!ship_texture.loadFromFile("Images/spaceShip.png"))
 	{
-		std::cout << "Load failed" << std::endl;
+		std::cout << "Image load failed" << std::endl;
 		system("pause");
 	}
 	if (!alien_texture.loadFromFile("Images/alien.png"))
 	{
-		std::cout << "Load failed" << std::endl;
+		std::cout << "Image load failed" << std::endl;
 		system("pause");
 	}
 	if (!background_texture.loadFromFile("Images/background.jpg"))
 	{
-		std::cout << "Load failed" << std::endl;
+		std::cout << "Image load failed" << std::endl;
 		system("pause");
 	}
 	if (!bullet_texture.loadFromFile("Images/bullet.png"))
 	{
-		std::cout << "Load failed" << std::endl;
+		std::cout << "Image load failed" << std::endl;
 		system("pause");
 	}
 	if (!proface_texture.loadFromFile("Images/proface.png"))
 	{
-		std::cout << "Load failed" << std::endl;
+		std::cout << "Image load failed" << std::endl;
 		system("pause");
 	}
 
 	// Make sprites from textures
 	sf::Sprite ship;
 	ship.setTexture(ship_texture);
-
-	sf::Sprite alien;
-	alien.setTexture(alien_texture);
 
 	sf::Sprite proface;
 	proface.setTexture(proface_texture);
@@ -60,9 +133,20 @@ int main()
 
 	sf::Sprite bullet;
 	bullet.setTexture(bullet_texture);
-	//sf::Sprite bullet2;
-	//bullet2.setTexture(bullet_texture);
 
+	// Start aliens
+	alien aliens[numAliens];
+
+	for (int i = 0; i < numAliens; i++) {
+		aliens[i].r = r;
+		aliens[i].alienAnglePos = (2 * PI) / numAliens * i;
+		aliens[i].sprite.setTexture(alien_texture);
+		aliens[i].alien_size = aliens[i].sprite.getGlobalBounds();
+		aliens[i].sprite.setOrigin(sf::Vector2f(aliens[i].alien_size.width / 2, aliens[i].alien_size.height / 2));
+		aliens[i].sprite.setPosition(aliens[i].r * std::sin(aliens[i].alienAnglePos) + (1920 / 2), aliens[i].r * std::cos(aliens[i].alienAnglePos) + (1080 / 2));
+		aliens[i].sprite.setRotation(-aliens[i].alienAnglePos * 180 / PI + 180);
+		aliens[i].sprite.setScale(7, 7);
+	}
 
 	// Set origins for sprites
 	sf::Rect<float> ship_size = ship.getGlobalBounds();
@@ -70,7 +154,6 @@ int main()
 
 	// Set initial positions for sprites	
 	ship.setPosition(150 * std::sin(anglePos) + (1920 / 2), 150 * std::cos(anglePos) + (1080 / 2));
-	alien.setPosition(sf::Vector2f(800, 100));
 	ship.setRotation(-anglePos * 180 / PI + 180);
 	sf::Rect<float> proface_size = proface.getGlobalBounds();
 	proface.setOrigin(sf::Vector2f(proface_size.width / 2, proface_size.height / 2));
@@ -81,9 +164,8 @@ int main()
 
 	// Scale initial sprites
 	ship.setScale(10, 10);
-	alien.setScale(7, 7);
 	proface.setScale(0.4, 0.4);
-	background.setScale(3, 3);
+	background.setScale(1, 1);
 	bullet.setScale(2, 2);
 	//bullet2.setScale(2, 2);
 
@@ -119,82 +201,196 @@ int main()
 	{
 		// Check an event and deal with it 
 		sf::Event event;
-		while (window.pollEvent(event))
+		bool started = false;
+		bool gameOver = false;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { started = true; }
+		while (started)
 		{
-			switch (event.type)
+			while (window.pollEvent(event))
 			{
+				switch (event.type)
+				{
 				case sf::Event::Closed:
+					started = false;
 					window.close();
 					break;
 
-				// Window is resized
+					// Window is resized
 				case sf::Event::Resized:
 					std::cout << "new width: " << event.size.width << std::endl;
 					std::cout << "new height: " << event.size.height << std::endl;
 
-				// key pressed
+					// key pressed
 				case sf::Event::KeyPressed:
-					
+
 					break;
+
+				}
+
+			}
+			// update game
+			//Spacebar
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			{
+				std::cout << "Shoot!" << std::endl;
+				// Get ship position
+				sf::Vector2f position = ship.getPosition();
+				float rotation = ship.getRotation();
+				player_bullet.setX(position.x);
+				player_bullet.setY(position.y);
+				player_bullet.setAng(rotation);
+				player_bullet.setSpd(7);
+			}
+			//Right arrow key
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			{
+				anglePos -= 0.05;
+				ship.setPosition(150 * std::sin(anglePos) + (1920 / 2), 150 * std::cos(anglePos) + (1080 / 2));
+				ship.setRotation(-anglePos * 180 / PI + 180);
+			}
+			//Left arrow key
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			{
+				anglePos += 0.05;
+				ship.setPosition(150 * std::sin(anglePos) + (1920 / 2), 150 * std::cos(anglePos) + (1080 / 2));
+				ship.setRotation(-anglePos * 180 / PI + 180);
+			}
+			tuple <float, float> bullet_tuple;
+			bullet_tuple = player_bullet.bulletMovement();
+			bullet.setPosition(get<0>(bullet_tuple), get<1>(bullet_tuple));
+			//bullet2.setPosition(player_bullet[1].getX(), player_bullet[1].getY());
+			for (int i = 0; i < numAliens; i++)
+			{
+				if (aliens[i].sprite.getGlobalBounds().intersects(bullet.getGlobalBounds()))
+				{
+					std::cout << "Collision" << std::endl;
+					aliens[i].r = 800;
+					aliens[i].sprite.setPosition(aliens[i].r * std::sin(aliens[i].alienAnglePos) + (1920 / 2), aliens[i].r * std::cos(aliens[i].alienAnglePos) + (1080 / 2));
+					//alienHit = true;
+					//alien.setPosition((rand() % 1500), (rand() % 400) + 400); // THIS IS BAD
+					if (grade < 4) { grade++; }
+				}
+				if (aliens[i].sprite.getGlobalBounds().intersects(ship.getGlobalBounds()))
+				{
+					std::cout << "Collision" << std::endl;
+					//alien.setPosition((rand() % 1500), (rand() % 400) + 400); // THIS IS BAD
+					if (grade > 0) { grade--; }
+				}
+				if (aliens[i].sprite.getGlobalBounds().intersects(proface.getGlobalBounds()))
+				{
+					std::cout << "Collision" << std::endl;
+					grade = 0;
+					gameOver = true;
+				}
+			}
+			if (grade == 0) { gameOver = true; }
+			std::ostringstream oss;
+			oss << "Grade: " << gradeLetter[grade];
+			std::string gradeStr = oss.str();
+			lives.setString(gradeStr);
+
+			control_motion++;
+			if (control_motion % 20 == 0) {
+				for (int i = 0; i < numAliens; i++) {
+					aliens[i].r -= (rand() % 15);
+					aliens[i].alienAnglePos += float((float(rand() % 11) - 5) / 50);
+					aliens[i].sprite.setPosition(aliens[i].r * std::sin(aliens[i].alienAnglePos) + (1920 / 2), aliens[i].r * std::cos(aliens[i].alienAnglePos) + (1080 / 2));
+					aliens[i].sprite.setRotation(-aliens[i].alienAnglePos * 180 / PI + 180);
+				}
+				control_motion = 0;
+			}
+			/*for (int i = 0; i < numAliens; i++)
+			{
+				sf::Vector2f alien_loc = aliens[i].sprite.getPosition();
+				sf::Vector2f prof_loc = proface.getPosition();
+				if (alien_loc.x >= prof_loc.x)
+				{
+					if (alien_loc.y >= prof_loc.y)
+					{
+						aliens[i].sprite.move(-1, -1);
+					}
+					else
+					{
+						aliens[i].sprite.move(-1, 1);
+					}
+				}
+				else
+				{
+					if (alien_loc.y >= prof_loc.y)
+					{
+						aliens[i].sprite.move(1, -1);
+					}
+					else
+					{
+						aliens[i].sprite.move(1, 1);
+					}
+				}
+			}*/
+			// Make a black window
+			window.clear(sf::Color::Black);
+			window.draw(background);
+
+			for (int i = 0; i < numAliens; i++)
+			{
+				window.draw(aliens[i].sprite);
+			}
+
+			// This is where you draw...
+			//if (!alienHit)
+			//{
+			//window.draw(alien);
+			//}
+			window.draw(bullet);
+			window.draw(ship);
+			window.draw(proface);
+			window.draw(lives);
+
+
+			// End the current frame
+			window.display();
+
+			while (gameOver)
+			{
+				window.clear(sf::Color::Black);
+				window.draw(background);
+				/*
+				window.draw(title);
+				
+				*/
+				window.draw(press_space);
+				window.draw(bullet);
+				window.draw(ship);
+				window.draw(proface);
+				window.draw(lives);
+				
+				window.draw(game_over);
+				window.display();
+				std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+				window.close();
 
 			}
 
 		}
-		// update game
-		//Spacebar
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		{
-			std::cout << "Shoot!" << std::endl;
-			// Get ship position
-			sf::Vector2f position = ship.getPosition();
-			float rotation = ship.getRotation();
-			player_bullet.setX(position.x);
-			player_bullet.setY(position.y);
-			player_bullet.setAng(rotation);
-			player_bullet.setSpd(2);
-		}
-		//Right arrow key
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		{
-			anglePos -= 0.01;
-			ship.setPosition(150 * std::sin(anglePos) + (1920 / 2), 150 * std::cos(anglePos) + (1080 / 2));
-			ship.setRotation(-anglePos * 180 / PI + 180);
-		}
-		//Left arrow key
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		{
-			anglePos += 0.01;
-			ship.setPosition(150 * std::sin(anglePos) + (1920 / 2), 150 * std::cos(anglePos) + (1080 / 2));
-			ship.setRotation(-anglePos * 180 / PI + 180);
-		}
-		tuple <float, float> bullet_tuple;
-		bullet_tuple = player_bullet.bulletMovement();
-		bullet.setPosition(get<0>(bullet_tuple), get<1>(bullet_tuple));
-		//bullet2.setPosition(player_bullet[1].getX(), player_bullet[1].getY());
-
-
 		// Make a black window
 		window.clear(sf::Color::Black);
+		window.draw(background);
+
 
 		// This is where you draw...
-		window.draw(background);
-		if (alien.getGlobalBounds().intersects(bullet.getGlobalBounds()))
-		{
-			std::cout << "Collision" << std::endl;
-		}
-		else
-		{
-			window.draw(alien);
-		}
+		//if (!alienHit)
+		//{
+		//window.draw(alien);
+		//}
+		window.draw(bullet);
 		window.draw(ship);
 		window.draw(proface);
-		window.draw(bullet);
-
+		window.draw(lives);
+		window.draw(title);
+		window.draw(press_space);
 
 
 		// End the current frame
-		window.display();
-
+		window.display();		
 
 	}
 

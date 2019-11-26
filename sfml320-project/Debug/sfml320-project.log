@@ -1,13 +1,23 @@
 ﻿  Main.cpp
-C:\Users\Hoz\schindlerslist\sfml320-project\Classes\bullet.cpp(47,18): warning C4244:  'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\Hoz\schindlerslist\sfml320-project\Main.cpp(72,83): warning C4244:  'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Hoz\schindlerslist\sfml320-project\Main.cpp(72,44): warning C4244:  'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Hoz\schindlerslist\sfml320-project\Main.cpp(74,40): warning C4244:  'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Hoz\schindlerslist\sfml320-project\Main.cpp(85,27): warning C4305:  'argument': truncation from 'double' to 'float'
-C:\Users\Hoz\schindlerslist\sfml320-project\Main.cpp(160,85): warning C4244:  'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Hoz\schindlerslist\sfml320-project\Main.cpp(160,46): warning C4244:  'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Hoz\schindlerslist\sfml320-project\Main.cpp(161,42): warning C4244:  'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Hoz\schindlerslist\sfml320-project\Main.cpp(167,85): warning C4244:  'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Hoz\schindlerslist\sfml320-project\Main.cpp(167,46): warning C4244:  'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Hoz\schindlerslist\sfml320-project\Main.cpp(168,42): warning C4244:  'argument': conversion from 'double' to 'float', possible loss of data
-  sfml320-project.vcxproj -> C:\Users\Hoz\schindlerslist\sfml320-project\Debug\sfml320-project.exe
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Classes\bullet.cpp(47,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(8,11): warning C4273: 'rand': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdlib.h(348,37): message : see previous definition of 'rand'
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(146,142): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(146,80): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(147,68): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(156,83): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(156,44): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(157,40): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(167,27): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(248,86): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(248,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(249,43): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(255,86): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(255,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(256,43): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(268,145): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(268,83): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(297,145): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(297,83): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\repos\NEW_REPO\schindlerslist\sfml320-project\Main.cpp(298,71): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  sfml320-project.vcxproj -> C:\repos\NEW_REPO\schindlerslist\sfml320-project\Debug\sfml320-project.exe
