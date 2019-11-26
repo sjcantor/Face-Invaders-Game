@@ -2,6 +2,9 @@
 #include <iostream>
 #include "Classes/bullet.cpp"
 #include <tuple>
+#define PI 3.14159265358979323846
+
+double anglePos = 0;
 
 int main()
 {
@@ -66,8 +69,9 @@ int main()
 	ship.setOrigin(sf::Vector2f(ship_size.width / 2, ship_size.height / 2));
 
 	// Set initial positions for sprites	
-	ship.setPosition(sf::Vector2f(960, 540));
+	ship.setPosition(150 * std::sin(anglePos) + (1920 / 2), 150 * std::cos(anglePos) + (1080 / 2));
 	alien.setPosition(sf::Vector2f(800, 100));
+	ship.setRotation(-anglePos * 180 / PI + 180);
 	sf::Rect<float> proface_size = proface.getGlobalBounds();
 	proface.setOrigin(sf::Vector2f(proface_size.width / 2, proface_size.height / 2));
 	proface.setPosition(sf::Vector2f(1920 / 2, 1080 / 2));
@@ -152,12 +156,16 @@ int main()
 		//Right arrow key
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			ship.rotate(1.5);
+			anglePos -= 0.01;
+			ship.setPosition(150 * std::sin(anglePos) + (1920 / 2), 150 * std::cos(anglePos) + (1080 / 2));
+			ship.setRotation(-anglePos * 180 / PI + 180);
 		}
 		//Left arrow key
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			ship.rotate(-1.5);
+			anglePos += 0.01;
+			ship.setPosition(150 * std::sin(anglePos) + (1920 / 2), 150 * std::cos(anglePos) + (1080 / 2));
+			ship.setRotation(-anglePos * 180 / PI + 180);
 		}
 		tuple <float, float> bullet_tuple;
 		bullet_tuple = player_bullet.bulletMovement();
@@ -179,19 +187,9 @@ int main()
 			window.draw(alien);
 		}
 		window.draw(ship);
-<<<<<<< HEAD
-<<<<<<< HEAD
 		window.draw(proface);
 		window.draw(bullet);
-		
-=======
-		window.draw(bullet1);
-		window.draw(bullet2);
->>>>>>> origin/master
-=======
-		window.draw(bullet);
-		//window.draw(bullet2);
->>>>>>> origin/master
+
 
 
 		// End the current frame
