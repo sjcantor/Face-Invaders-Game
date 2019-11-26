@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Classes/bullet.cpp"
+#include <tuple>
 
 int main()
 {
@@ -45,32 +46,32 @@ int main()
 	sf::Sprite background;
 	background.setTexture(background_texture);
 
-	sf::Sprite bullet1;
-	bullet1.setTexture(bullet_texture);
-	sf::Sprite bullet2;
-	bullet2.setTexture(bullet_texture);
+	sf::Sprite bullet;
+	bullet.setTexture(bullet_texture);
+	//sf::Sprite bullet2;
+	//bullet2.setTexture(bullet_texture);
 
 	// Set origins for sprites
 	sf::Rect<float> ship_size = ship.getGlobalBounds();
 	ship.setOrigin(sf::Vector2f(ship_size.width / 2, ship_size.height / 2));
 
 	// Set initial positions for sprites	
-	ship.setPosition(sf::Vector2f(1050, 900));
+	ship.setPosition(sf::Vector2f(960, 540));
 	alien.setPosition(sf::Vector2f(800, 100));
 	background.setPosition(sf::Vector2f(0, 0));
-	bullet1.setPosition(sf::Vector2f(-10, -10));
-	bullet2.setPosition(sf::Vector2f(-10, -10));
+	bullet.setPosition(sf::Vector2f(-10, -10));
+	//bullet2.setPosition(sf::Vector2f(-10, -10));
 
 	// Scale initial sprites
 	ship.setScale(10, 10);
 	alien.setScale(7, 7);
 	background.setScale(3, 3);
-	bullet1.setScale(2, 2);
-	bullet2.setScale(2, 2);
+	bullet.setScale(2, 2);
+	//bullet2.setScale(2, 2);
 
-	Bullet player_bullet[2];
-	player_bullet[0] = Bullet(-10, -10, 2, 0);
-	player_bullet[1] = Bullet(-10, -10, 2, 0);
+	Bullet player_bullet;
+	player_bullet = Bullet(-10, -10, 0, 0);
+	//player_bullet[1] = Bullet(-10, -10, 2, 0);
 	int i = 0;
 
 
@@ -121,22 +122,20 @@ int main()
 						// Get ship position
 						sf::Vector2f position = ship.getPosition();
 						float rotation = ship.getRotation();
-						float speed = 3;
-						player_bullet[i%2].setX(position.x);
-						player_bullet[i % 2].setY(position.y);
-						player_bullet[i % 2].setAng(rotation);
-						player_bullet[i%2].bulletMovement();
-						i++;
+						player_bullet.setX(position.x);
+						player_bullet.setY(position.y);
+						player_bullet.setAng(rotation);
+						player_bullet.setSpd(1);
 					}
 					//Right arrow key
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 					{
-						ship.rotate(45);
+						ship.rotate(30);
 					}
 					//Left arrow key
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 					{
-						ship.rotate(-45);
+						ship.rotate(-30);
 					}
 					//Up arrow key
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
@@ -156,9 +155,10 @@ int main()
 			}
 
 		}
-		
-		bullet1.setPosition(player_bullet[0].getX(), player_bullet[0].getY());
-		bullet2.setPosition(player_bullet[1].getX(), player_bullet[1].getY());
+		tuple <float, float> bullet_tuple;
+		bullet_tuple = player_bullet.bulletMovement();
+		bullet.setPosition(get<0>(bullet_tuple), get<1>(bullet_tuple));
+		//bullet2.setPosition(player_bullet[1].getX(), player_bullet[1].getY());
 
 
 		// Make a black window
@@ -168,8 +168,8 @@ int main()
 		window.draw(background);
 		window.draw(alien);
 		window.draw(ship);
-		window.draw(bullet1);
-		window.draw(bullet2);
+		window.draw(bullet);
+		//window.draw(bullet2);
 
 
 		// End the current frame
