@@ -29,5 +29,7 @@ public:
 	void bulletMovement();
 	float getX();
 	float getY();
+	void setX(float);
+	void setY(float);
 
 };
